@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fibonachi Code Test</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div style="display: block; color: white;">
+            <h3 style="color: lightskyblue;text-decoration: underline;">Fibonacci Sequence Generator</h3>
+            <label for="num1">First Number</label>
+            <input class="numIn" type="number" name="num1" id="num1"><br>
+            <label for="num2">Second Number</label>
+            <input class="numIn" type="number" name="num2" id="num2"><br>
+            <label for="range">Range/Count</label>
+            <input class="numIn" type="number" name="range" id="range">
+        </div>
+        <br>
+        <button class="btn" onclick="generate()">Generate Sequence</button>
+        <button class="btn" onclick="clearResult()">Clear Result</button>
+        <hr>
+        <p style="color: lightskyblue;" id="answerLine" style="visibility: hidden;"></p>
+    </div>
+    <script>
+        let solution = document.getElementById('answerLine');
+        let num1Elem = document.getElementById('num1');
+        let num2Elem = document.getElementById('num2');
+        let rangeElem = document.getElementById('range');
+
+        let num1,num2,range;
+
+        num1Elem.addEventListener('change', function(){
+            num1 = num1Elem.value;
+        });
+        num2Elem.addEventListener('change', function(){
+            num2 = num2Elem.value;
+        });
+        rangeElem.addEventListener('change', function(){
+            range = rangeElem.value;
+        });
+
+        function generate(){
+            if (num1 == undefined || num2 == undefined || range == undefined) {
+                solution.innerHTML = 'Kindly input three valid numbers for the range and numbers';
+            }
+            else{
+                let first = Number(num1);
+                let second = Number(num2);
+                let count = Number(range);
+                let result = [first, second];
+                let sum = 0;
+
+                if (range <= 2) {
+                    solution.innerHTML = 'Kindly input a range greater than 2';
+                }
+                else{
+                    for (let i = 0; i < (count-2); i++) {
+                        sum = first + second;
+                        result.push(sum);
+                        first = second;
+                        second = sum;
+                    }
+                    solution.innerHTML = result;
+                }
+
+            }
+
+            solution.style.visibility = 'visible';
+        }
+
+        function clearResult(){
+            solution.style.visibility = 'hidden';
+        }
+    </script>
+</body>
+</html>
