@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <title>Fibonachi Code Test</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
         <div style="display: block; color: white;">
@@ -30,23 +32,23 @@
         let num2Elem = document.getElementById('num2');
         let rangeElem = document.getElementById('range');
 
-        let num1,num2,range;
+        let num1, num2, range;
 
-        num1Elem.addEventListener('change', function(){
+        num1Elem.addEventListener('change', function () {
             num1 = num1Elem.value;
         });
-        num2Elem.addEventListener('change', function(){
+        num2Elem.addEventListener('change', function () {
             num2 = num2Elem.value;
         });
-        rangeElem.addEventListener('change', function(){
+        rangeElem.addEventListener('change', function () {
             range = rangeElem.value;
         });
 
-        function generate(){
+        function generate() {
             if (num1 == undefined || num2 == undefined || range == undefined) {
                 solution.innerHTML = 'Kindly input three valid numbers for the range and numbers';
             }
-            else{
+            else {
                 let first = Number(num1);
                 let second = Number(num2);
                 let count = Number(range);
@@ -56,14 +58,22 @@
                 if (range <= 2) {
                     solution.innerHTML = 'Kindly input a range greater than 2';
                 }
-                else{
-                    for (let i = 0; i < (count-2); i++) {
+                else {
+                    for (let i = 0; i < (count - 2); i++) {
                         sum = first + second;
                         result.push(sum);
                         first = second;
                         second = sum;
                     }
-                    result = result.map(x => x.toFixed(2));
+
+                    result = result.map(x => {
+                        if (x.toString().includes('.')) {
+                            return x.toFixed(2)
+                        }
+                        else{
+                            return x
+                        }
+                    });
                     solution.innerHTML = result;
                 }
 
@@ -72,9 +82,10 @@
             solution.style.visibility = 'visible';
         }
 
-        function clearResult(){
+        function clearResult() {
             solution.style.visibility = 'hidden';
         }
     </script>
 </body>
+
 </html>
