@@ -23,6 +23,7 @@
         <br>
         <button class="btn" onclick="generate()">Generate Sequence</button>
         <button class="btn" onclick="clearResult()">Clear Result</button>
+        <button class="btn" onclick="reset()">Reset</button>
         <hr>
         <p style="color: lightskyblue;" id="answerLine" style="visibility: hidden;"></p>
     </div>
@@ -32,57 +33,81 @@
         let num2Elem = document.getElementById('num2');
         let rangeElem = document.getElementById('range');
 
-        let num1, num2, range;
-
-        num1Elem.addEventListener('change', function () {
-            num1 = num1Elem.value;
-        });
-        num2Elem.addEventListener('change', function () {
-            num2 = num2Elem.value;
-        });
-        rangeElem.addEventListener('change', function () {
-            range = rangeElem.value;
-        });
+        // num1Elem.addEventListener('change', function () {
+        //     num1 = num1Elem.value;
+        // });
+        // num2Elem.addEventListener('change', function () {
+        //     num2 = num2Elem.value;
+        // });
+        // rangeElem.addEventListener('change', function () {
+        //     range = rangeElem.value;
+        // });
 
         function generate() {
-            if (num1 == undefined || num2 == undefined || range == undefined) {
-                solution.innerHTML = 'Kindly input three valid numbers for the range and numbers';
-            }
-            else {
-                let first = Number(num1);
-                let second = Number(num2);
-                let count = Number(range);
-                let result = [first, second];
-                let sum = 0;
+            try {
+                solution.style.visibility = 'visible';
+                if (num1Elem.value == '' || num2Elem.value == '' || rangeElem.value == '') {
+                    solution.innerText = 'Kindly input three valid numbers for the range and numbers';
+                    return;
+                }
 
-                if (range <= 2) {
-                    solution.innerHTML = 'Kindly input a range greater than 2';
+                let num1 = Number(num1Elem.value), num2 = Number(num2Elem.value), range = Number(rangeElem.value);
+                if (num1 == 0 && num2 == 0) {
+                    solution.innerText = 'Both number values cannot be zero';
+                    return;
+                }
+                console.log('numbers...', num1, num2, range)
+                if (num1 == undefined || num2 == undefined || range == undefined) {
+                    solution.innerText = 'Kindly input three valid numbers for the range and numbers';
+                    return;
                 }
                 else {
-                    for (let i = 0; i < (count - 2); i++) {
-                        sum = first + second;
-                        result.push(sum);
-                        first = second;
-                        second = sum;
+                    let first = Number(num1);
+                    let second = Number(num2);
+                    let count = Number(range);
+                    let result = [first, second];
+                    let sum = 0;
+
+                    if (range <= 2) {
+                        solution.innerText = 'Kindly input a range greater than 2';
+                    }
+                    else {
+                        for (let i = 0; i < (count - 2); i++) {
+                            sum = first + second;
+                            result.push(sum);
+                            first = second;
+                            second = sum;
+                        }
+
+                        result = result.map(x => {
+                            if (x.toString().includes('.')) {
+                                return x.toFixed(2)
+                            }
+                            else {
+                                return x
+                            }
+                        });
+                        solution.innerText = result;
                     }
 
-                    result = result.map(x => {
-                        if (x.toString().includes('.')) {
-                            return x.toFixed(2)
-                        }
-                        else{
-                            return x
-                        }
-                    });
-                    solution.innerHTML = result;
                 }
 
+                solution.style.visibility = 'visible';
+            } catch (error) {
+                console.log(error)
             }
+            
+        }
 
-            solution.style.visibility = 'visible';
+        let reset = ()=>{
+            num1Elem.value = 0;
+            num2Elem.value = 0;
+            rangeElem.value = 0;
+            clearResult()
         }
 
         function clearResult() {
+            solution.value = 0;
             solution.style.visibility = 'hidden';
         }
     </script>
